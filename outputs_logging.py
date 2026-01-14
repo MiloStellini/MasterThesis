@@ -74,7 +74,7 @@ def cg_solution_json(path, columns, zvars, get_index, T, objVal):
             solution[f"z[{f},{t}]"] = val
 
     objective = f"Objective value: {objVal}"
-    with open(path, "w", encoding="utf-8") as f:
+    with open(path, "w") as f:
         json.dump(objective, f)
         json.dump(solution, f, indent=2)
 
@@ -132,3 +132,4 @@ def log_master_vars(cData, model, phase="DRMP", nonzero_only= True, tol=1e-6):
 
         write_csv(str(outpath), rows, header=header)
         logging.info("[LOG_MASTER_VARS]")
+
