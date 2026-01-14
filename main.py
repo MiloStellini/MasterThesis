@@ -209,7 +209,6 @@ if __name__ == "__main__":
 
     logging.basicConfig(
         filename=f"{_cmd_options.outdir}{logfileprefix}.log",
-        encoding="utf-8",
         filemode="w",
         format="{asctime}.s{msecs:.0f} - {levelname} - {message}",
         style="{",
@@ -309,7 +308,7 @@ if __name__ == "__main__":
 
             out_txt = Path(_cmd_options.outdir) / "heur_results.txt"
 
-            with open(out_txt, "a", encoding="utf-8") as f:
+            with open(out_txt, "a") as f:
                 if not heur_sol.isfeasible:
                     f.write(f"{_cmd_options.fileprefix};INFEASIBLE\n")
                 else:
