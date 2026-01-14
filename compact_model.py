@@ -3,6 +3,7 @@ import toy_instances as toy
 from corberan_data import CorberanData, get_index
 from corberan_solution import CorberanSolution
 import logging
+from typing import Optional
 
 
 class CompactModel:
@@ -123,7 +124,7 @@ class CompactModel:
 
     def run(self, timelim : int = None,
             rootonly : bool = False,
-            LP_relaxation : bool = False) -> CorberanSolution | None:
+            LP_relaxation : bool = False) -> Optional[CorberanSolution]:
 
         if timelim is not None:
             self.model.setParam('TimeLimit', timelim)
@@ -190,4 +191,5 @@ def main():
     sol.export_json("../compact_solutions.json")
 
 if __name__ == "__main__":
+
     main()
