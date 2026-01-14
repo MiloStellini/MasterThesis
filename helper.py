@@ -23,7 +23,7 @@ def load_population(path: str) -> dict:
     return pool
 
 
-def save_columns(columns: defaultdict[list], path):
+def save_columns(columns, path):
     serial = {}
     for t, cols in columns.items():
         serial[t] = []
@@ -61,5 +61,6 @@ def rebuild_xyq_from_nonzero(nonzero, cData):
             X[idx1, idx2] = float(val)
 
     return Y, Q, X
+
 
 
