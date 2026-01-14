@@ -18,7 +18,7 @@ POP_SIZE = 30
 N_GEN = 30
 TILIM = 1200
 
-SEEDS = [0, 1, 2]
+SEEDS = [0, 1, 2, 3, 4]
 FRACS = [0.00, 0.25, 0.50, 0.75, 1.00]
 # ===============================
 
@@ -55,9 +55,7 @@ def main():
                 "-pop", str(POP_SIZE),
                 "-gen", str(N_GEN),
                 "-cl", str(POP_SIZE),
-                "--cgpool",
-                "--poolfile", str(pool_npz),
-                "--colsfile", str(cols_pkl)
+                "--cgpool"
             ]
             run(cmd)
 
@@ -91,5 +89,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
