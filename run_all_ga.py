@@ -46,7 +46,7 @@ def main():
 
         if not pool_npz.exists():
             cmd = [
-                "python", "-u", str(MAIN_PY),
+                "python3", "-u", str(MAIN_PY),
                 "-b", str(BASEDIR) + os.sep,
                 "-f", ds,
                 "-o", str(pool_dir) + os.sep,
@@ -74,7 +74,7 @@ def main():
                 run_dir.mkdir(parents=True, exist_ok=True)
 
                 cmd = [
-                    "python", "-u", str(MAIN_PY),
+                    "python3", "-u", str(MAIN_PY),
                     "-b", str(BASEDIR) + os.sep,
                     "-f", ds,
                     "-o", str(run_dir) + os.sep,
@@ -91,4 +91,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
