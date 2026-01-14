@@ -3,13 +3,13 @@ import subprocess
 from pathlib import Path
 
 # ====== CONFIG DA SETTARE ======
-PROJECT_ROOT = Path(r"C:\Users\milos\Desktop\tesi\corberan\algo\src")      # cartella dove sta main.py
+PROJECT_ROOT = Path(r"/home/mstellini/corberan/MasterThesis")      # cartella dove sta main.py
 MAIN_PY = PROJECT_ROOT / "main.py"
 
-BASEDIR = Path(r"C:\Users\milos\Desktop\tesi\corberan\corberan_profiling_dataset\corberan_profiling_dataset")
-DATASET_LIST = Path(r"C:\Users\milos\Desktop\tesi\nomi_dataset.txt")  # copia qui il txt allegato
+BASEDIR = Path(r"/home/mstellini/corberan/corberan_profiling_dataset")
+DATASET_LIST = Path(r"/home/mstellini/corberan/nomi_dataset.txt")  # copia qui il txt allegato
 
-OUT_ROOT = PROJECT_ROOT / r"logs\ga_logs"
+OUT_ROOT = PROJECT_ROOT / r"/home/mstellini/corberan/logs"
 
 ALG_CG = "cg_seq"      # oppure "cg_par"
 ALG_GA = "ga_only"
@@ -91,3 +91,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
