@@ -15,7 +15,7 @@ from corberan_data import CorberanData, PricerTimeColumn
 from corberan_solution import CorberanSolution
 from DiscreteRMP import DiscreteRMP
 from multiprocessing import Process, Queue
-from typing import Dict
+from typing import Dict, Optional
 import time
 
 import nsga as ga
@@ -784,7 +784,7 @@ class CG_w_in_master:
         nF = int(self.cData.nF)
         P = int(self.cData.nsga_pop_size)
 
-        def build_init_for_t(t: int, pool_mat: np.ndarray | None) -> np.ndarray:
+        def build_init_for_t(t: int, pool_mat: Optional[np.ndarray] = None) -> np.ndarray:
             rng = np.random.default_rng(seed + 1000 * int(t))
 
             k = int(round(frac * P))
