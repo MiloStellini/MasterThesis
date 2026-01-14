@@ -23,7 +23,7 @@ FRACS = [0.00, 0.25, 0.50, 0.75, 1.00]
 # ===============================
 
 def read_datasets(path: Path):
-    with open(path, "r", encoding="utf-8") as f:
+    with open(path, "r") as f:
         return [line.strip() for line in f if line.strip()]
 
 def run(cmd):
@@ -89,6 +89,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
