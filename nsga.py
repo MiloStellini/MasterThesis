@@ -1,5 +1,5 @@
 import numpy as np
-from typing import Dict
+from typing import Dict, Optional
 from corberan_data import CorberanData
 
 from pymoo.algorithms.moo.nsga2 import NSGA2
@@ -17,7 +17,7 @@ import csv
 from pathlib import Path
 from nsga_config import NsgaProblemConfig, split_chromosome, join_chromosome
 
-def _create_YQ_initial_population(cData, n_extra: int, rng: np.random.Generator | None = None) -> np.ndarray:
+def _create_YQ_initial_population(cData, n_extra: int, rng: Optional[np.random.Generator] = None) -> np.ndarray:
     if rng is None:
         rng = np.random.default_rng()
     nF = cData.nF
@@ -428,4 +428,5 @@ def _log_nsga_generation_history(t: int,
         writer = csv.writer(f)
         writer.writerow(["t", "gen", "best_f", "mean_f"])
         for row in history:
+
             writer.writerow(row)    
