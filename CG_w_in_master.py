@@ -669,7 +669,7 @@ class CG_w_in_master:
             # metrics.json
             import json
             metrics_path = os.path.join(self.cData.log_out_dir, "metrics.json")
-            with open(metrics_path, "w", encoding="utf-8") as f:
+            with open(metrics_path, "w") as f:
                 json.dump({
                     "mode": "CG_POOL",
                     "dataset_prefix": self.cData.outfilename,
@@ -913,7 +913,7 @@ class CG_w_in_master:
             obj = float(getattr(dsol, "objval", getattr(dsol, "objVal", None)) or getattr(dsol, "ObjVal", None) or 0.0)
             status = str(getattr(dsol, "status", ""))
 
-        with open(metrics_path, "w", encoding="utf-8") as f:
+        with open(metrics_path, "w") as f:
             json.dump({
                 "mode": "GA_ONLY",
                 "dataset_prefix": self.cData.outfilename,
@@ -1016,7 +1016,6 @@ if __name__ == "__main__":
 
     logging.basicConfig(
         filename=f"{_cmd_options.outdir}{logfilename}",
-        encoding="utf-8",
         filemode="w",
         format="{asctime}.s{msecs:.0f} - {levelname} - {message}",
         style="{",
