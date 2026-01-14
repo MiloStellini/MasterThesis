@@ -10,7 +10,7 @@ import logging
 # from corberan_data import CorberanData
 import toy_instances as toy
 
-EXECUTABLE_PATH = Path(__file__).parent / "construction_heuristic.exe"
+EXECUTABLE_PATH = Path(__file__).parent / "construction_heuristic"
 
 
 def construction_heuristic(nF, nC, nT, d, q_in):
