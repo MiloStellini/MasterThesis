@@ -614,7 +614,7 @@ class CG_w_in_master:
                 if self.cData.do_cg_pool:
                     enough_cols = True
                     for t in self.cData.T:
-                        if len(all_columns[t]) < self.cData.nsga_min_cols_per_t + self.cData.T:
+                        if len(all_columns[t]) < (self.cData.nsga_min_cols_per_t + len(self.cData.T)):
                             enough_cols = False
                             break
                     if enough_cols:
@@ -624,7 +624,7 @@ class CG_w_in_master:
                 if self.cData.use_nsga:
                     enough_cols = True
                     for t in self.cData.T:
-                        if len(all_columns[t]) < self.cData.nsga_min_cols_per_t + self.cData.T:
+                        if len(all_columns[t]) < (self.cData.nsga_min_cols_per_t + len(self.cData.T)):
                             enough_cols = False
                             break
                     if enough_cols:
