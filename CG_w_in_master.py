@@ -614,7 +614,7 @@ class CG_w_in_master:
                 if self.cData.do_cg_pool:
                     enough_cols = True
                     for t in self.cData.T:
-                        if len(all_columns[t]) < self.cData.nsga_min_cols_per_t:
+                        if len(all_columns[t]) < self.cData.nsga_min_cols_per_t + self.cData.T:
                             enough_cols = False
                             break
                     if enough_cols:
@@ -624,7 +624,7 @@ class CG_w_in_master:
                 if self.cData.use_nsga:
                     enough_cols = True
                     for t in self.cData.T:
-                        if len(all_columns[t]) < self.cData.nsga_min_cols_per_t:
+                        if len(all_columns[t]) < self.cData.nsga_min_cols_per_t + self.cData.T:
                             enough_cols = False
                             break
                     if enough_cols:
@@ -795,8 +795,7 @@ class CG_w_in_master:
             else:
                 pool_mat = pool_mat.astype(float)
                 k_eff = min(k, pool_mat.shape[0])
-                idx = rng.choice(pool_mat.shape[0], size=k_eff, replace=False)
-                from_pool = pool_mat[idx, :]
+                from_pool = pool_mat[:k_eff, :]
 
             n_rand = P - from_pool.shape[0]
             rand_part = ga._create_YQ_initial_population(self.cData, n_rand, rng) if n_rand > 0 else np.empty((0, 2*nF), dtype=float)
