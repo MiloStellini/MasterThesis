@@ -782,7 +782,7 @@ class CG_w_in_master:
         #if dsol is not None and out_filepath != "":
         #    dsol.export_json(out_filepath)
 
-    def ga_only(self, saved_cols, pool: dict, frac: float, seed: int):
+    def ga_only(self, saved_cols, pool: dict, heur_pool: dict, frac: float, seed: int):
 
         config = facility_opening_yq_config
         nF = int(self.cData.nF)
@@ -810,13 +810,14 @@ class CG_w_in_master:
 
         for t, cols in saved_cols.items():
             for i, col in enumerate(cols):
-                y, q, x = hlp.rebuild_xyq_from_nonzero(col["nonzero_vars"], self.cData)
-                c, obj_c = self.build_column(t, y, q, x)
+                if col["name"].startswith("chi_heur") or i < frac * self.cData.nsga_min_cols_per_t:
+                    y, q, x = hlp.rebuild_xyq_from_nonzero(col["nonzero_vars"], self.cData)
+                    c, obj_c = self.build_column(t, y, q, x)
 
-                chi_var = self.master_model.addVar(
-                    vtype=GRB.CONTINUOUS, lb=0.0, obj=obj_c, column=c, name=col["name"]
-                )
-                all_columns[t].append(PricerTimeColumn(col["name"], col["cg_iter"], t, col["nonzero_vars"], chi_var))
+                    chi_var = self.master_model.addVar(
+                        vtype=GRB.CONTINUOUS, lb=0.0, obj=obj_c, column=c, name=col["name"]
+                    )
+                    all_columns[t].append(PricerTimeColumn(col["name"], col["cg_iter"], t, col["nonzero_vars"], chi_var))
                 
         self.master_model.update()
 
@@ -855,7 +856,8 @@ class CG_w_in_master:
         population = {}
         for t in self.cData.T:
             init_pop = build_init_for_t(t, pool.get(t, None))
-            population[t] = [init_pop[i, :] for i in range(init_pop.shape[0])]
+            heur_col = heur_pool.get(t, None)
+            population[t] = [heur_col] + [init_pop[i, :] for i in range(init_pop.shape[0])]
 
         logging.info(f"[GA_ONLY] start GA: frac={frac}, seed={seed}, pop_size={P}")
 
