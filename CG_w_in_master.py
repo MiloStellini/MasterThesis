@@ -656,10 +656,12 @@ class CG_w_in_master:
 
         if self.cData.do_cg_pool:
             config = facility_opening_yq_config
-            pool = ga.extract_population(all_columns, self.cData, config)
+            heur_pool, pool = ga.extract_population(all_columns, self.cData, config)
 
             # dove salvare l'npz: se pool_file è settato uso quello, altrimenti default in outdir
             pool_path = self.cData.pool_file if getattr(self.cData, "pool_file", "") else os.path.join(self.cData.log_out_dir, "cg_pool.npz")
+            heur_pool_path = self.cData.heur_pool_file if getattr(self.cData, "heur_pool_file", "") else os.path.join(self.cData.log_out_dir, "heur_pool.npz")
+            hlp.save_population(heur_pool, heur_pool_path)
             hlp.save_population(pool, pool_path)
             hlp.save_columns(all_columns, os.path.join(self.cData.log_out_dir, "cg_cols.pkl"))
 
@@ -688,7 +690,9 @@ class CG_w_in_master:
             logging.info("GA start")
 
             ga_start = time.time()
-            population = ga.extract_population(all_columns, self.cData, config)
+            heur_pop, population = ga.extract_population(all_columns, self.cData, config)
+            for t, col in heur_pop.items():
+                population[t].append(col)
             ga_results, ga_gens = ga.run_nsga(population, self.cData, config)
             ga_time = time.time() - ga_start
             logging.info("GA ended")
