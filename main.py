@@ -148,6 +148,11 @@ if __name__ == "__main__":
                         type=str,
                         default="", 
                         help="Path for pool .npz saved after CG")
+    parser.add_argument("--heurpoolfile",
+                        dest="heur_pool_file", 
+                        type=str,
+                        default="", 
+                        help="Path for heur pool .npz saved after CG")
     parser.add_argument("--colsfile",
                         dest="cols_file", 
                         type=str,
@@ -253,6 +258,7 @@ if __name__ == "__main__":
         _cData.nsga_pool_frac = _cmd_options.nsga_pool_frac
         _cData.do_cg_pool = _cmd_options.do_cg_pool
         _cData.pool_file = _cmd_options.pool_file
+        _cData.heur_pool_file = _cmd_options.heur_pool_file
         _cData.cols_file = _cmd_options.cols_file
 
 
@@ -290,15 +296,19 @@ if __name__ == "__main__":
         elif algotype in [CorberanAlgoType.GA_ONLY]:
             if _cmd_options.pool_file == "":
                 raise ValueError("GA_ONLY richiede --poolfile <path_al_pool.npz>")
+            if _cmd_options.heur_pool_file == "":
+                raise ValueError("GA_ONLY richiede --heurpoolfile <path_al_pool.npz>")
 
             import helper as hlp
             pool_loaded = hlp.load_population(_cmd_options.pool_file)
+            heur_pool_loaded = hlp.load_population(_cmd_options.heur_pool_file)
             cols_loaded = hlp.load_columns(_cmd_options.cols_file)
             cg_algo = CG_w_in_master(_cData, False)
 
             sol = cg_algo.ga_only(
                 cols_loaded,
                 pool_loaded,
+                heur_pool_loaded,
                 frac=_cmd_options.nsga_pool_frac,
                 seed=_cmd_options.seed,
             )
