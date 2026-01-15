@@ -93,6 +93,7 @@ class CorberanData:
         self.nsga_pool_frac = 1.0
         self.do_cg_pool = False
         self.pool_file = ""
+        self.heur_pool_file = ""
         self.cols_file = ""
         ################################################
 
