@@ -317,18 +317,28 @@ def extract_population(all_columns: Dict[int, list],
                        cData: CorberanData,
                        config: NsgaProblemConfig,
                        drop_duplicates: bool = False) -> Dict[int, list]:
-    
+
+    heur_pop = {t: [] for t in cData.T}
     population = {t: [] for t in cData.T}
 
     for t, cols in all_columns.items():
         for col in cols:
             chrom = config.column_to_chromosome(col, cData)
-            population[t].append(chrom)
+            if col.col_name.startswith("chi_heur"):
+                heur_pop[t].append(chrom)
+            
+            else:
+                population[t].append(chrom)
 
     if drop_duplicates:
-        for t in population:
+        for t in cData.T:
             uniq = []
             seen = set()
+            for chrom in heur_pop[t]:
+                key = tuple(chrom.tolist())
+                if key not in seen:
+                    seen.add(key)
+                    uniq.append(chrom)
             for chrom in population[t]:
                 key = tuple(chrom.tolist())
                 if key not in seen:
@@ -336,7 +346,7 @@ def extract_population(all_columns: Dict[int, list],
                     uniq.append(chrom)
             population[t] = uniq
 
-    return population
+    return heur_pop, population
 
 
 
@@ -430,3 +440,4 @@ def _log_nsga_generation_history(t: int,
         for row in history:
 
             writer.writerow(row)    
+
