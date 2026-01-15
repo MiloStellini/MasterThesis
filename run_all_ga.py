@@ -42,6 +42,7 @@ def main():
         pool_dir = ds_root / f"pool_cl{POP_SIZE}"
         pool_dir.mkdir(parents=True, exist_ok=True)
         pool_npz = pool_dir / "cg_pool.npz"
+        heur_pool_npz = pool_dir / "heur_pool.npz"
         cols_pkl = pool_dir / "cg_cols.pkl"
 
         if not pool_npz.exists():
@@ -81,6 +82,7 @@ def main():
                     "-pop", str(POP_SIZE),
                     "-gen", str(N_GEN),
                     "--poolfile", str(pool_npz),
+                    "--heurpoolfile", str(heur_pool_npz),
                     "--colsfile", str(cols_pkl),
                     "--poolfrac", str(frac),
                     "--seed", str(seed),
@@ -89,6 +91,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
