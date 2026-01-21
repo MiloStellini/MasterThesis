@@ -821,38 +821,6 @@ class CG_w_in_master:
                 
         self.master_model.update()
 
-        # for t in self.cData.T:
-        #     pool_mat = pool.get(t, None)
-        #     if pool_mat is None or pool_mat.size == 0:
-        #         continue
-
-        #     for i in range(pool_mat.shape[0]):
-        #         chrom = pool_mat[i, :].astype(float)
-
-        #         y = chrom[:nF]
-        #         q = chrom[nF:]
-
-        #         x, feasible = x_build_from_yq(y, q, self.cData, t)
-        #         if not feasible:
-        #             continue
-
-        #         c, obj_c = self.build_column(t, y, q, x)
-                
-        #         nz_vars = {}
-        #         for f in np.where(y > 1e-5)[0]:
-        #             nz_vars[f"y_{int(f)}_{t-1}"] = float(y[f])
-        #         for f in np.where(q > 1e-5)[0]:
-        #             nz_vars[f"q_{int(f)}_{t-1}"] = float(q[f])
-        #         a, b = np.where(x > 1e-5)
-        #         for kk in range(len(a)):
-        #             nz_vars[f"x_{int(a[kk])}_{int(b[kk])}_{t-1}"] = float(x[a[kk], b[kk]])
-
-        #         colname = f"chi_pool_t{t}_ind{i}"
-        #         chi_var = self.master_model.addVar(
-        #             vtype=GRB.CONTINUOUS, lb=0.0, obj=obj_c, column=c, name=colname
-        #         )
-        #         all_columns[t].append(PricerTimeColumn(colname, -10, t, nz_vars, chi_var))
-
         population = {}
         for t in self.cData.T:
             init_pop = build_init_for_t(t, pool.get(t, None))
@@ -931,6 +899,47 @@ class CG_w_in_master:
                 "pool_file": str(getattr(self.cData, "pool_file", ""))
             }, f, indent=2)
         return dsol
+
+    def drmp_only(self, saved_cols):
+
+        all_columns = defaultdict(list)
+        for t, cols in saved_cols.items():
+            for i, col in enumerate(cols):
+                if col["name"].startswith("chi_heur") or i < 30:
+                    y, q, x = hlp.rebuild_xyq_from_nonzero(col["nonzero_vars"], self.cData)
+                    c, obj_c = self.build_column(t, y, q, x)
+
+                    chi_var = self.master_model.addVar(
+                        vtype=GRB.CONTINUOUS, lb=0.0, obj=obj_c, column=c, name=col["name"]
+                    )
+                    all_columns[t].append(PricerTimeColumn(col["name"], col["cg_iter"], t, col["nonzero_vars"], chi_var))
+                    
+        self.master_model.update()
+
+        drmp = DiscreteRMP(self.master_model, all_columns, self.cData)
+        drmp_start = time.time()
+        dsol = drmp.run()
+        drmp_time = time.time() - drmp_start
+
+        metrics_path = os.path.join(self.cData.log_out_dir, "metrics.json")
+
+        obj = None
+        status = None
+        if dsol is not None:
+            obj = float(getattr(dsol, "objval", getattr(dsol, "objVal", None)) or getattr(dsol, "ObjVal", None) or 0.0)
+            status = str(getattr(dsol, "status", ""))
+
+        with open(metrics_path, "w", encoding="utf-8") as f:
+            json.dump({
+                "mode": "DRMP_ONLY",
+                "dataset_prefix": self.cData.outfilename,
+                "drmp_time": float(drmp_time),
+                "drmp_obj": obj,
+                "sol_status": status
+            }, f, indent=2)
+
+        return dsol
+
 
 if __name__ == "__main__":
 
