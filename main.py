@@ -324,7 +324,17 @@ if __name__ == "__main__":
                 else:
                     f.write(f"{_cmd_options.fileprefix};{heur_sol.objval}\n")
                 
-        
+        elif algotype in [CorberanAlgoType.DRMP_ONLY]:
+            if _cmd_options.cols_file == "":
+                raise ValueError("DRMP_ONLY richiede --colsfile <path_al_cols.npz>")
+            
+            import helper as hlp
+            cols_loaded = hlp.load_columns(_cmd_options.cols_file)
+            cg_algo = CG_w_in_master(_cData, False)
+
+            sol = cg_algo.drmp_only(
+                cols_loaded
+            )
 
     else:
 
