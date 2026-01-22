@@ -17,6 +17,7 @@ class CorberanAlgoType(Enum):
     LP_REL = 4
     GA_ONLY = 5
     HEUR_ONLY = 6
+    DRMP_ONLY = 7
 
     @classmethod
     def from_label(cls, label: str):
@@ -35,7 +36,8 @@ class CorberanAlgoType(Enum):
             return cls.GA_ONLY
         elif _label == "heur_only":
             return cls.HEUR_ONLY
-        
+        elif _label == "drmp_only":
+            return cls.DRMP_ONLY
         raise ValueError("expecting a label in set ['compact', 'cg_par', 'cg_seq']")
     
 
