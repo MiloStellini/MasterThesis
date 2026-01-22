@@ -109,7 +109,7 @@ if __name__ == "__main__":
                         "--gamincol",
                         dest="nsga_min_cols_per_t",
                         type=int,
-                        default=20,
+                        default=30,
                         help="min number of columns per time before stopping CG in GA mode",
                         required=False)
     parser.add_argument("-pop",
