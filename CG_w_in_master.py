@@ -905,7 +905,7 @@ class CG_w_in_master:
         all_columns = defaultdict(list)
         for t, cols in saved_cols.items():
             for i, col in enumerate(cols):
-                if col["name"].startswith("chi_heur") or i < 30:
+                if col["name"].startswith("chi_heur") or i < self.cData.nsga_min_cols_per_t:
                     y, q, x = hlp.rebuild_xyq_from_nonzero(col["nonzero_vars"], self.cData)
                     c, obj_c = self.build_column(t, y, q, x)
 
