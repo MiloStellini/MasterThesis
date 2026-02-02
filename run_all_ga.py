@@ -9,7 +9,7 @@ MAIN_PY = PROJECT_ROOT / "main.py"
 BASEDIR = Path(r"/home/mstellini/corberan/corberan_profiling_dataset")
 DATASET_LIST = Path(r"/home/mstellini/corberan/nomi_dataset.txt")  # copia qui il txt allegato
 
-OUT_ROOT = PROJECT_ROOT / r"/home/mstellini/corberan/logs"
+OUT_ROOT = PROJECT_ROOT / r"/home/mstellini/corberan/logsmultx10"
 
 ALG_CG = "cg_seq"      # oppure "cg_par"
 ALG_GA = "ga_only"
@@ -94,6 +94,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
