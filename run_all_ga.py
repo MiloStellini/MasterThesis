@@ -20,7 +20,7 @@ TILIM = 12000
 
 SEEDS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
 FRACS = [0.00, 0.25, 0.50, 0.75, 1.00]
-MULTIPLIERS = [1,1,10,1]
+MULTIPLIERS = str("1,1,10,1")
 # ===============================
 
 def read_datasets(path: Path):
@@ -54,7 +54,7 @@ def main():
                 "-o", str(pool_dir) + os.sep,
                 "-a", ALG_CG,
                 "-t", str(TILIM),
-                "-m", str(MULTIPLIERS),
+                "-m", MULTIPLIERS,
                 "-pop", str(POP_SIZE),
                 "-gen", str(N_GEN),
                 "-cl", str(POP_SIZE),
@@ -94,6 +94,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
