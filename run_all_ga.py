@@ -16,10 +16,11 @@ ALG_GA = "ga_only"
 
 POP_SIZE = 30
 N_GEN = 30
-TILIM = 1200
+TILIM = 12000
 
 SEEDS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
 FRACS = [0.00, 0.25, 0.50, 0.75, 1.00]
+MULTIPLIERS = [1,1,10,1]
 # ===============================
 
 def read_datasets(path: Path):
@@ -53,6 +54,7 @@ def main():
                 "-o", str(pool_dir) + os.sep,
                 "-a", ALG_CG,
                 "-t", str(TILIM),
+                "-m", str(MULTIPLIERS),
                 "-pop", str(POP_SIZE),
                 "-gen", str(N_GEN),
                 "-cl", str(POP_SIZE),
@@ -79,6 +81,7 @@ def main():
                     "-o", str(run_dir) + os.sep,
                     "-a", ALG_GA,
                     "-t", str(TILIM),
+                    "-m", str(MULTIPLIERS),
                     "-pop", str(POP_SIZE),
                     "-gen", str(N_GEN),
                     "--poolfile", str(pool_npz),
@@ -91,6 +94,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
