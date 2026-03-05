@@ -36,7 +36,7 @@ def main():
         out_dir.mkdir(parents=True, exist_ok= True)
 
         cmd = [
-            "python", "-u", str(MAIN_PY),
+            "python3", "-u", str(MAIN_PY),
             "-b", str(BASEDIR) + os.sep,
             "-f", ds,
             "-o", str(out_dir) + os.sep,
@@ -48,4 +48,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
