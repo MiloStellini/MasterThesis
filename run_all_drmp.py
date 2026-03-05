@@ -3,13 +3,13 @@ import subprocess
 from pathlib import Path
 
 # ====== CONFIG DA SETTARE ======
-PROJECT_ROOT = Path(r"C:\Users\milos\Desktop\tesi\git_codes")      # cartella dove sta main.py
+PROJECT_ROOT = Path(r"/home/mstellini/corberan/MasterThesis")      # cartella dove sta main.py
 MAIN_PY = PROJECT_ROOT / "main.py"
 
-BASEDIR = Path(r"C:\Users\milos\Desktop\tesi\corberan\corberan_profiling_dataset\corberan_profiling_dataset")
-DATASET_LIST = Path(r"C:\Users\milos\Desktop\tesi\nomi_dataset.txt")  # copia qui il txt allegato
-COLS_ROOT = Path(r"C:\Users\milos\Desktop\tesi\logsmultx10\logsmultx10")
-OUT_ROOT = Path(r"C:\Users\milos\Desktop\tesi\logsmultx10")
+BASEDIR = Path(r"/home/mstellini/corberan/corberan_profiling_dataset")
+DATASET_LIST = Path(r"/home/mstellini/corberan/nomi_dataset.txt")  # copia qui il txt allegato
+COLS_ROOT = Path(r"/home/mstellini/corberan/logsmultx10")
+OUT_ROOT = Path(r"C/home/mstellini/corberan/logsmultx10/CG_only")
 
 ALG = "drmp_only"
 MULTIPLIERS = str("1,1,10,1")
@@ -48,3 +48,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
