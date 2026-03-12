@@ -38,9 +38,10 @@ def main():
             "-o", str(out_dir) + os.sep,
             "-a", ALG,
             "-m", MULTIPLIERS,
-            "-t", 1200
+            "-t", str(1200)
         ]
         run(cmd)
 
 if __name__ == "__main__":
     main()
+
