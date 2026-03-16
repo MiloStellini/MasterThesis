@@ -11,7 +11,7 @@ DATASET_LIST = Path(r"/home/mstellini/corberan/nomi_dataset.txt")  # copia qui i
 OUT_ROOT = Path(r"/home/mstellini/corberan/logs/compact")
 
 ALG = "compact"
-MULTIPLIERS = str("1,1,1,1")
+MULTIPLIERS = str("1,1,10,1")
 
 # ===============================
 
