@@ -40,7 +40,7 @@ def main():
             "-b", str(BASEDIR) + os.sep,
             "-f", ds,
             "-o", str(out_dir) + os.sep,
-            "-t", 1200,
+            "-t", str(1200),
             "-a", ALG,
             "-m", MULTIPLIERS,
             "--colsfile", str(cols_pkl)
