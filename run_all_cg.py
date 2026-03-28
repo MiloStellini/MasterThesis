@@ -8,7 +8,7 @@ MAIN_PY = PROJECT_ROOT / "main.py"
 
 BASEDIR = Path(r"/home/mstellini/corberan/corberan_profiling_dataset")
 DATASET_LIST = Path(r"/home/mstellini/corberan/nomi_dataset.txt")  # copia qui il txt allegato
-OUT_ROOT = Path(r"/home/mstellini/corberan/logs/compact")
+OUT_ROOT = Path(r"/home/mstellini/corberan/logs/CG_final")
 
 ALG = "compact"
 MULTIPLIERS = str("1,1,1,1")
