@@ -17,7 +17,7 @@ from pathlib import Path
 PROJECT_ROOT = Path(r"/home/mstellini/corberan/MasterThesis")      # cartella con merge_seeds_drmp.py
 MERGE_SCRIPT = PROJECT_ROOT / "merge_seeds_drmp.py"
 
-BASEDIR = Path(r"/home/mstellini/corberan/corberan_profiling_dataset/corberan_profiling_dataset")
+BASEDIR = Path(r"/home/mstellini/corberan/corberan_profiling_dataset")
 DATASET_LIST = Path(r"/home/mstellini/corberan/nomi_dataset.txt")
 
 # Cartella che contiene, per ogni istanza, sia <istanza>/ga_cl30_gen30/... sia
