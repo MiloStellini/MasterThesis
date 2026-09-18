@@ -807,7 +807,6 @@ class CG_w_in_master:
             return np.vstack([from_pool, rand_part])
 
         all_columns = defaultdict(list)
-
         for t, cols in saved_cols.items():
             for i, col in enumerate(cols):
                 if col["name"].startswith("chi_heur") or i < frac * self.cData.nsga_min_cols_per_t:
@@ -817,6 +816,7 @@ class CG_w_in_master:
                     chi_var = self.master_model.addVar(
                         vtype=GRB.CONTINUOUS, lb=0.0, obj=obj_c, column=c, name=col["name"]
                     )
+                    
                     all_columns[t].append(PricerTimeColumn(col["name"], col["cg_iter"], t, col["nonzero_vars"], chi_var))
                 
         self.master_model.update()

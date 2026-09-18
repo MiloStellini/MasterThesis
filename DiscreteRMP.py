@@ -30,7 +30,7 @@ class DiscreteRMP:
             for col in column:
                 col.var.setAttr(GRB.Attr.VType, GRB.INTEGER)
 
-    def run(self, timelimit : int = 2000):
+    def run(self, timelimit : int = 2000 ):
         
         self.model.setParam('TimeLimit', timelimit)
 

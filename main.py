@@ -86,7 +86,7 @@ if __name__ == "__main__":
                         "--tilim",
                         dest="tilim",
                         type=int,
-                        default=1200,
+                        default=2000,
                         help="int: time limit (in seconds) of the compact model. default to 1200 seconds",
                         required=False)
 

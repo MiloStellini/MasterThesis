@@ -206,10 +206,6 @@ class YQMutation(Mutation):
                 y_mut[zero_rows, idx] = 1
 
         # Mutazione q         
-        # flip_q = np.random.rand(n_pop, nF) < self.p_q
-        # noise_q = (np.random.rand(n_pop, nF) - 0.5) * (M * 0.05)
-        # q[flip_q] += noise_q[flip_q]
-        # q = np.clip(q, 0.0, M)
         mask_q = (np.random.rand(n_pop, nF) < self.p_q) & (q > 0)
         I, F = np.where(mask_q)
         if I.size > 0:

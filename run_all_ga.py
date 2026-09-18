@@ -9,7 +9,7 @@ MAIN_PY = PROJECT_ROOT / "main.py"
 BASEDIR = Path(r"/home/mstellini/corberan/corberan_profiling_dataset")
 DATASET_LIST = Path(r"/home/mstellini/corberan/nomi_dataset.txt")  # copia qui il txt allegato
 
-OUT_ROOT = PROJECT_ROOT / r"/home/mstellini/corberan/logsmultx10"
+OUT_ROOT = PROJECT_ROOT / r"/home/mstellini/corberan/logs"
 
 ALG_CG = "cg_seq"      # oppure "cg_par"
 ALG_GA = "ga_only"
@@ -18,9 +18,8 @@ POP_SIZE = 30
 N_GEN = 30
 TILIM = 1200
 
-SEEDS = [12, 13, 14]
-FRACS = [1.00]
-MULTIPLIERS = str("1,1,10,1")
+SEEDS = [5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+FRACS = [0.00, 0.25, 0.50, 0.75, 1.00]
 # ===============================
 
 def read_datasets(path: Path):
@@ -48,13 +47,12 @@ def main():
 
         if not pool_npz.exists():
             cmd = [
-                "python3", "-u", str(MAIN_PY),
+                "python", "-u", str(MAIN_PY),
                 "-b", str(BASEDIR) + os.sep,
                 "-f", ds,
                 "-o", str(pool_dir) + os.sep,
                 "-a", ALG_CG,
                 "-t", str(TILIM),
-                "-m", MULTIPLIERS,
                 "-pop", str(POP_SIZE),
                 "-gen", str(N_GEN),
                 "-cl", str(POP_SIZE),
@@ -75,13 +73,12 @@ def main():
                 run_dir.mkdir(parents=True, exist_ok=True)
 
                 cmd = [
-                    "python3", "-u", str(MAIN_PY),
+                    "python", "-u", str(MAIN_PY),
                     "-b", str(BASEDIR) + os.sep,
                     "-f", ds,
                     "-o", str(run_dir) + os.sep,
                     "-a", ALG_GA,
                     "-t", str(TILIM),
-                    "-m", str(MULTIPLIERS),
                     "-pop", str(POP_SIZE),
                     "-gen", str(N_GEN),
                     "--poolfile", str(pool_npz),
@@ -94,11 +91,6 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-
-
-
 
 
 

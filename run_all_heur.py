@@ -9,9 +9,10 @@ MAIN_PY = PROJECT_ROOT / "main.py"
 BASEDIR = Path(r"C:\Users\milos\Desktop\tesi\corberan\corberan_profiling_dataset\corberan_profiling_dataset")
 DATASET_LIST = Path(r"C:\Users\milos\Desktop\tesi\nomi_dataset.txt")
 
-OUT_ROOT = PROJECT_ROOT / r"logs"
+OUT_ROOT = PROJECT_ROOT / r"logsx10"
 
 ALG_HEUR = "heur_only"
+MULTIPLIERS = str("1,1,10,1")
 
 # ===============================
 
@@ -34,7 +35,8 @@ def main():
             "-b", str(BASEDIR) + os.sep,
             "-f", ds,
             "-o", str(OUT_ROOT),
-            "-a", ALG_HEUR
+            "-a", ALG_HEUR,
+            "-m", MULTIPLIERS
         ]
         run(cmd)
 

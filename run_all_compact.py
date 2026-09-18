@@ -8,7 +8,7 @@ MAIN_PY = PROJECT_ROOT / "main.py"
 
 BASEDIR = Path(r"/home/mstellini/corberan/corberan_profiling_dataset")
 DATASET_LIST = Path(r"/home/mstellini/corberan/nomi_dataset.txt")  # copia qui il txt allegato
-OUT_ROOT = Path(r"/home/mstellini/corberan/logs/compact")
+OUT_ROOT = Path(r"C/home/mstellini/corberan/logs/compact")
 
 ALG = "compact"
 MULTIPLIERS = str("1,1,1,1")
@@ -38,11 +38,9 @@ def main():
             "-o", str(out_dir) + os.sep,
             "-a", ALG,
             "-m", MULTIPLIERS,
-            "-t", str(1200)
+            "-t", 1200
         ]
         run(cmd)
 
 if __name__ == "__main__":
     main()
-
-
