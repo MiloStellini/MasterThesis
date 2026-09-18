@@ -38,6 +38,8 @@ OUTPUT (stessa convenzione usata finora, dentro --outdir):
     metrics.json                      riepilogo: tempi, obiettivo, status, colonne incluse
 """
 
+from __future__ import annotations
+
 import argparse
 import json
 import logging
