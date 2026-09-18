@@ -11,6 +11,7 @@ prima di lanciare.
 """
 
 import subprocess
+import sys
 from pathlib import Path
 
 # ====== CONFIG DA SETTARE (stesso spirito di run_all_ga.py) ======
@@ -48,32 +49,41 @@ def main():
     OUT_ROOT.mkdir(parents=True, exist_ok=True)
     datasets = read_datasets(DATASET_LIST)
 
-    for ds in datasets:
-        for frac in FRACS:
-            frac_pct = int(round(frac * 100))
-            outdir = OUT_ROOT / ds / f"frac{frac_pct:03d}" / "MERGED_ALL_SEEDS"
-            outdir.mkdir(parents=True, exist_ok=True)
+    combos = [(ds, frac) for ds in datasets for frac in FRACS]
+    total = len(combos)
+    n_ok, n_skip, n_err = 0, 0, 0
 
-            metrics_path = outdir / "metrics.json"
-            if metrics_path.exists():
-                print(f"SKIP (gia' fatto): {ds} frac={frac}")
-                continue
+    for i, (ds, frac) in enumerate(combos, 1):
+        frac_pct = int(round(frac * 100))
+        outdir = OUT_ROOT / ds / f"frac{frac_pct:03d}" / "MERGED_ALL_SEEDS"
+        outdir.mkdir(parents=True, exist_ok=True)
 
-            cmd = [
-                "python", "-u", str(MERGE_SCRIPT),
-                "--basedir", str(BASEDIR) + "/",
-                "--instance", ds,
-                "--frac", str(frac),
-                "--ga-root", str(GA_ROOT),
-                "--mult", MULT,
-                "--cl", str(CL),
-                "--timelimit", str(TIMELIMIT),
-                "--outdir", str(outdir) + "/",
-            ]
-            try:
-                run(cmd)
-            except subprocess.CalledProcessError as e:
-                print(f"ERRORE su {ds} frac={frac}: {e}")
+        metrics_path = outdir / "metrics.json"
+        if metrics_path.exists():
+            print(f"[{i}/{total}] SKIP (gia' fatto): {ds} frac={frac}")
+            n_skip += 1
+            continue
+
+        cmd = [
+            sys.executable, "-u", str(MERGE_SCRIPT),
+            "--basedir", str(BASEDIR) + "/",
+            "--instance", ds,
+            "--frac", str(frac),
+            "--ga-root", str(GA_ROOT),
+            "--mult", MULT,
+            "--cl", str(CL),
+            "--timelimit", str(TIMELIMIT),
+            "--outdir", str(outdir) + "/",
+        ]
+        print(f"[{i}/{total}] START: {ds} frac={frac}")
+        try:
+            run(cmd)
+            n_ok += 1
+        except subprocess.CalledProcessError as e:
+            n_err += 1
+            print(f"[{i}/{total}] ERRORE su {ds} frac={frac}: {e}", file=sys.stderr)
+
+    print(f"\n=== FINE SWEEP: {n_ok} completati, {n_skip} saltati (gia' fatti), {n_err} in errore su {total} totali ===")
 
 
 if __name__ == "__main__":
